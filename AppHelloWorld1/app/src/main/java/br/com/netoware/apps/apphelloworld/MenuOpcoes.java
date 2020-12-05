@@ -2,7 +2,9 @@ package br.com.netoware.apps.apphelloworld;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -40,13 +42,29 @@ public class MenuOpcoes extends ListActivity {
                 break;
                 
             case 1:
+                /*ChamadaDAO chamadadao = new ChamadaDAO(this);
+                Cursor listaChamadas = chamadadao.listAll();
+
+                while (listaChamadas.moveToNext()){
+                    Log.e("Discador", "Telefone:" + listaChamadas.getString(listaChamadas.getColumnIndex("telefone")));
+                    Log.e("Discador", "Data:" + listaChamadas.getString(listaChamadas.getColumnIndex("data")));
+                }*/
+
                 Intent it2 = new Intent(this, UltimasChamadasActivity.class);
                 startActivity(it2);
 
                 break;
                 
             case 2:
-                Toast.makeText(this, "Opção indisponível", Toast.LENGTH_SHORT).show();
+                ChamadaDAO chamadadao = new ChamadaDAO(this);
+                try{
+                    chamadadao.removeAll();
+                    Toast.makeText(this, "Sucesso", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(this, "ERRO AO EXCLUIR", Toast.LENGTH_SHORT).show();
+
+                }
+                /*Toast.makeText(this, "Opção indisponível", Toast.LENGTH_SHORT).show();*/
                 break;
                 
             case 3:

@@ -1,8 +1,11 @@
 package br.com.netoware.apps.apphelloworld;
 
 import android.app.ListActivity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,12 +14,20 @@ import androidx.annotation.Nullable;
 
 public class UltimasChamadasActivity extends ListActivity {
 
+    private Button bntExcluir;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
+        String[] colunasBanco = new String[]{"telefone", "data"};
+        int[] camposLayout = new int[]{R.id.txtTelefone, R.id.txtDataHora};
+        ChamadaDAO chamadaDAO = new ChamadaDAO(this);
+        Cursor ultimasChamadas = chamadaDAO.listAll();
 
-        ArrayList<HashMap<String, String>> dados = new ArrayList<>();
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.activity_ultimas_chamadas, ultimasChamadas, colunasBanco, camposLayout, 0);
+        setListAdapter(adapter);
+        /*ArrayList<HashMap<String, String>> dados = new ArrayList<>();
 
         HashMap<String, String> dados1 = new HashMap<>();
         dados1.put("nome", "Glaucio Rocha");
@@ -43,7 +54,11 @@ public class UltimasChamadasActivity extends ListActivity {
 
         SimpleAdapter adaptador = new SimpleAdapter(this, dados, R.layout.activity_ultimas_chamadas, chaves, nome_campos);
 
-        setListAdapter(adaptador);
+        setListAdapter(adaptador);*/
 
+    }
+
+    public void removerRegistro(){
+        bntExcluir = findViewById(R.id.bttexcluirRegistro);
     }
 }
